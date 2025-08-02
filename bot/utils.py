@@ -13,11 +13,10 @@ def load_data():
 
 
 def save_data(data):
-    """Сохраняет статистику пользователей"""
-    with open("bot/users.json", "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
-    # ❌ Никогда не возвращайте 'messages'!
-    return True  # ✅
+    os.makedirs(os.path.dirname(STATS_FILE), exist_ok=True)
+    with open(STATS_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    return True  # или просто уберите return
 
 
 def build_response(items, country=None):
@@ -58,7 +57,7 @@ def fetch_e_numbers():
     Загружает актуальную базу E-добавок с GitHub.
     Пример URL: замените на свой репозиторий
     """
-    url = "https://raw.githubusercontent.com/ ваш_пользователь/ваш_репозиторий/main/data/banned_additives.json"
+    url = "https://raw.githubusercontent.com/galochkak/safe-product-bot/main/data/banned_additives.json"
     
     try:
         response = requests.get(url, timeout=10)
