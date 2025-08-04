@@ -1,6 +1,7 @@
 aiogram==3.14.0
 python-dotenv==1.0.1
 requests==2.32.4
+numpy==1.26.4
 opencv-python-headless==4.9.0.80
 pyzbar==0.1.9
 pytesseract==0.3.10
