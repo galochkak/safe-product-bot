@@ -1,4 +1,4 @@
 #!/bin/bash
-# Устанавливаем системную библиотеку zbar
+# Устанавливаем системные зависимости
 apt-get update
-apt-get install -y libzbar0 libzbar-dev
+apt-get install -y libzbar0 libzbar-dev libgl1
