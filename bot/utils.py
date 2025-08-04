@@ -16,7 +16,7 @@ def save_data(data):
     os.makedirs(os.path.dirname(STATS_FILE), exist_ok=True)
     with open(STATS_FILE, "w", encoding="utf-8") as f:
         json.dump(data, f, ensure_ascii=False, indent=4)
-    return True  # или просто уберите return
+    # Уберите return messages   
 
 
 def build_response(items, country=None):
