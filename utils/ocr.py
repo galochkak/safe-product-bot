@@ -1,12 +1,18 @@
 ﻿# utils/ocr.py
+import cv2
 import pytesseract
-from PIL import Image
+from pyzbar.pyzbar import decode
+import numpy as np
 
-def extract_text_from_image(file_name):
-    try:
-        image = Image.open(file_name)
-        text = pytesseract.image_to_string(image, lang='rus+eng')
-        return text.strip()
-    except Exception as e:
-        print(f"[Ошибка] Не удалось распознать текст: {e}")
-        return ""
+def extract_text_from_image(image_path):
+    image = cv2.imread(image_path)
+    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+    text = pytesseract.image_to_string(gray, lang='eng')
+    return text.strip()
+
+def decode_qr_from_image(image_path):
+    image = cv2.imread(image_path)
+    decoded_objects = decode(image)
+    for obj in decoded_objects:
+        return obj.data.decode('utf-8')
+    return None
