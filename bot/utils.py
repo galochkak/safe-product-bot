@@ -1,32 +1,29 @@
 # bot/utils.py
 
+import os
 import json
 import requests
+from bs4 import BeautifulSoup
 
-def load_data():
-    """Загружает статистику пользователей"""
-    try:
-        with open("bot/users.json", "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {"users": {}, "total_messages": 0}
-
-
-def save_data(data):
-    os.makedirs(os.path.dirname(STATS_FILE), exist_ok=True)
-    with open(STATS_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
-    # Уберите return messages   
+# Определяем пути
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_FILE = os.path.join(BASE_DIR, 'data', 'banned_additives.json')
+STATS_FILE = os.path.join(BASE_DIR, 'data', 'stats.json')
 
 
 def build_response(items, country=None):
-    """Разбивает список на сообщения по 4096 символов"""
+    """
+    Формирует список сообщений, разбитых по частям (макс. 4096 символов).
+    """
     if not items:
         return ["✅ Запрещённых или опасных добавок не найдено."]
 
     max_length = 4096
     messages = []
     current_message = ""
+
+    if country:
+        current_message += f"<b>⚠️ Для <i>{country}</i>:</b>\n\n"
 
     for item in items:
         status = item.get("country_status", "ℹ️ Статус неизвестен")
@@ -52,48 +49,87 @@ def build_response(items, country=None):
     return messages
 
 
+def get_country_by_language(language_code):
+    """
+    Возвращает страну по языковому коду пользователя.
+    """
+    country_map = {
+        "ru": "Россия",
+        "uk": "Украина",
+        "be": "Беларусь",
+        "en": "США",
+        "es": "Испания",
+        "de": "Германия",
+        "fr": "Франция",
+        "it": "Италия",
+        "pl": "Польша",
+        "tr": "Турция"
+    }
+    return country_map.get(language_code, "Россия")
+
+
 def fetch_e_numbers():
     """
-    Загружает актуальную базу E-добавок с GitHub.
-    Пример URL: замените на свой репозиторий
+    Заглушка. Парсинг Wikipedia не работает стабильно.
+    Используется локальная база данных.
     """
-    url = "https://raw.githubusercontent.com/galochkak/safe-product-bot/main/data/banned_additives.json"
-    
+    print("[INFO] fetch_e_numbers() — временно отключён. Используется локальная база.")
+    return {}
+
+
+def update_json_file(data):
+    """
+    Обновляет JSON-файл с новыми добавками.
+    """
     try:
-        response = requests.get(url, timeout=10)
-        response.raise_for_status()
-        data = response.json()
-        
-        # Если есть вложенность {"additives": {...}}, извлекаем
-        if isinstance(data, dict) and "additives" in data:
-            data = data["additives"]
-            
-        return data
+        if os.path.exists(DATA_FILE):
+            with open(DATA_FILE, 'r', encoding='utf-8') as f:
+                existing_data = json.load(f)
+        else:
+            existing_data = {}
+
+        # Объединяем данные
+        merged_data = {**existing_data, **data}
+
+        # Сохраняем
+        with open(DATA_FILE, 'w', encoding='utf-8') as f:
+            json.dump(merged_data, f, ensure_ascii=False, indent=4)
+
+        print(f"[INFO] Обновлено {len(data)} добавок в базе данных.")
+        return len(data)
     except Exception as e:
-        print(f"[Ошибка] Не удалось загрузить данные: {e}")
-        return {}
-
-
-def update_json_file(new_additives):
-    """
-    Обновляет локальный JSON-файл новыми данными.
-    """
-    if not new_additives:
+        print(f"[Ошибка] Не удалось обновить базу данных: {e}")
         return 0
 
+
+def load_data():
+    """
+    Загружает данные из JSON-файла.
+    """
+    if not os.path.exists(DATA_FILE):
+        print("[Предупреждение] Файл базы данных не найден. Создаю новый...")
+        data = {"users": {}, "total_messages": 0}
+        save_data(data)
+        return data
+
     try:
-        with open("data/banned_additives.json", "r", encoding="utf-8") as f:
-            current_data = json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        current_data = {}
+        with open(DATA_FILE, "r", encoding="utf-8") as f:
+            raw_data = json.load(f)
+            if "users" not in raw_data:
+                raw_data["users"] = {}
+            if "total_messages" not in raw_data:
+                raw_data["total_messages"] = 0
+            return raw_data
+    except Exception as e:
+        print(f"[Критическая ошибка] Не удалось загрузить базу: {e}")
+        return {"users": {}, "total_messages": 0}
 
-    added_count = 0
-    for code, info in new_additives.items():
-        if code.startswith("E") and code not in current_data:
-            current_data[code] = info
-            added_count += 1
 
-    with open("data/banned_additives.json", "w", encoding="utf-8") as f:
-        json.dump(current_data, f, indent=2, ensure_ascii=False)
-
-    return added_count
+def save_data(data):
+    """
+    Сохраняет данные в JSON-файл.
+    """
+    os.makedirs(os.path.dirname(STATS_FILE), exist_ok=True)
+    with open(DATA_FILE, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=4)
+    # Не возвращаем ничего — убираем 'return messages'
