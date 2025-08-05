@@ -6,7 +6,7 @@ from aiogram.types import Message, PhotoSize, CallbackQuery
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-from bot.utils import load_data, save_data, build_response, fetch_e_numbers, update_json_file
+from bot.utils import load_data, save_data, build_response, fetch_e_numbers, update_json_file, get_country_by_language
 from bot.database import banned_additives
 from utils.ocr import extract_text_from_image
 
