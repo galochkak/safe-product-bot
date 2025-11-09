@@ -61,3 +61,25 @@ temp/
 *.zip
 *.tar.gz
 __pycache__/
+# Python
+__pycache__
+*.pyc
+.DS_Store
+
+# Environment variables
+.env
+.env.local
+
+# PyInstaller
+/dist
+/build
+*.exe
+
+# Database & stats (если не хочешь их выкладывать)
+data/stats.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*~

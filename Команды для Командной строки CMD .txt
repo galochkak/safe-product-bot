@@ -1,0 +1,228 @@
+Чтобы бот начал работать:
+? Шаг 1: Убедись, что ты в правильной папке
+
+Открой терминал (CMD или PowerShell) и выполни:
+cd C:\Users\User\Desktop\product_checker_bot
+ 
+? Шаг 2: Проверь наличие файлов
+
+В терминале выполни:
+dir
+Ты должен(а) увидеть такие папки и файлы:
+bot\
+data\
+utils\
+.env
+requirements.txt
+main.spec
+
+? Шаг 3: Убедись, что Python установлен
+Выполни:
+python --version
+
+Если видишь версию (например, Python 3.11.4) — отлично!
+
+? Шаг 4: Установи зависимости (если ещё не установлены)
+Выполни:
+pip install -r requirements.txt
+или
+python -m pip install -r requirements.txt
+
+Он установит:
+
+aiogram
+python-dotenv
+pytesseract
+
+
+? Шаг 5: Убедись, что .env содержит токен
+BOT_TOKEN=7208910535:AAE-adUaFxF-QgEY1aa7um7TDdvdAOMPp_4
+
+? Шаг 6: Запусти бота
+python -m bot.main
+
+
+Qwen3-235B-A22B-2507
+8:03 PM
+Конечно! ??
+Давай напомню, как проверить и запустить бота на твоём компьютере — пошагово, чтобы всё заработало.
+
+? Шаг 1: Убедись, что ты в правильной папке
+Открой терминал (CMD или PowerShell) и выполни:
+
+cmd
+
+
+1
+cd C:\Users\User\Desktop\product_checker_bot
+Это путь к твоему проекту. Если ты назвала папку иначе — замени имя. 
+
+? Шаг 2: Проверь наличие файлов
+В терминале выполни:
+
+cmd
+
+
+1
+dir
+Ты должен(а) увидеть такие папки и файлы:
+
+
+
+1
+2
+3
+4
+5
+6
+bot\
+data\
+utils\
+.env
+requirements.txt
+main.spec
+? Шаг 3: Убедись, что Python установлен
+Выполни:
+
+cmd
+
+
+1
+python --version
+или
+
+cmd
+
+
+1
+py --version
+Если видишь версию (например, Python 3.11.4) — отлично!
+
+? Шаг 4: Установи зависимости (если ещё не установлены)
+Выполни:
+
+cmd
+
+
+1
+pip install -r requirements.txt
+или
+
+cmd
+
+
+1
+python -m pip install -r requirements.txt
+Он установит:
+
+aiogram
+python-dotenv
+pytesseract
+Pillow
+? Шаг 5: Убедись, что .env содержит токен
+Открой файл .env в Блокноте — он должен содержать:
+
+env
+
+
+1
+BOT_TOKEN=7208910535:AAE-adUaFxF-QgEY1aa7um7TDdvdAOMPp_4
+?? Нет пробелов, кавычек или лишних символов 
+
+? Шаг 6: Запусти бота
+Выполни команду:
+cmd
+1
+python -m bot.main
+или
+
+cmd
+1
+py -m bot.main
+? Что должно быть в терминале
+
+Если всё работает, ты увидишь:
+? Бот запущен!
+INFO:aiogram.bot.api:Using upstream API server request timeout: 60.0 sec
+INFO:aiogram.dispatcher.dispatcher:Start polling...
+
+
+profile
+Qwen3-235B-A22B-2507
+11:36 PM
+Отличный вопрос! ??
+Проверить, установлен ли у тебя Git Bash, очень просто. Давай сделаем это пошагово.
+
+? Способ 1: Проверь через меню «Пуск»
+Нажми Пуск (или Win)
+Начни печатать:
+
+
+1
+Git Bash
+Если появится значок:
+??? Git Bash
+Или Git for Windows
+> Значит, установлен.
+
+? Способ 2: Найди в папке установки
+Открой проводник и перейди:
+
+
+
+1
+C:\Program Files\Git\bin\bash.exe
+или
+
+
+
+1
+C:\Program Files (x86)\Git\bin\bash.exe
+Если файл есть — значит, Git Bash установлен.
+
+? Способ 3: Проверь в командной строке
+Открой CMD или PowerShell и выполни:
+
+cmd
+
+
+1
+git --version
+Если ответ такой:
+
+
+
+1
+git version 2.xx.x.windows.1
+— значит, Git установлен, а вместе с ним и Git Bash.
+
+?? При установке Git ты автоматически получаешь Git Bash. 
+
+? Способ 4: Запусти Git Bash напрямую
+Нажми Win + R, введи:
+
+
+
+1
+"C:\Program Files\Git\git-bash.exe"
+и нажми Enter
+
+Если откроется чёрное окно с надписью:
+
+user@PC_NAME MINGW64 ~
+$
+
+ Это и есть Git Bash — он работает!
+---------------------------------------------------------------------
+Перезапустить бота!!!
+? Решение: перейди в правильную папку
+Выполни в CMD:
+
+cmd
+1
+cd C:\Users\User\Desktop\product_checker_bot
+Затем запусти бота:
+
+cmd
+1
+python -m bot.main

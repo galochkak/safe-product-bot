@@ -4,7 +4,14 @@ from aiogram import Bot, Dispatcher
 from aiogram.fsm.storage.memory import MemoryStorage
 from bot.handlers import router  # ✅ Абсолютный импорт
 import os
+import sys
+sys.stderr = open('error.log', 'w')
 from dotenv import load_dotenv
+import os
+
+load_dotenv()
+token = os.getenv("BOT_TOKEN")
+print(f"🔧 Токен: {token}")
 import asyncio
 
 # Загружаем переменные окружения
